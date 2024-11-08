@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUserInfo = exports.updateUserAvatar = exports.updateUserPassword = exports.resetUserPassword = exports.forgetUserPassword = exports.verifyUserAccount = exports.loginUser = exports.createUser = exports.getAllUser = exports.getUser = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const crypto_1 = __importDefault(require("crypto"));
 const userModel_1 = __importDefault(require("../model/userModel"));
 const email_1 = require("../utils/email");
@@ -48,8 +48,8 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const { email, password, userName } = req.body;
         const token = crypto_1.default.randomBytes(3).toString("hex");
         const coded = crypto_1.default.randomBytes(3).toString("hex");
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hashed = yield bcrypt_1.default.hash(password, salt);
+        const salt = yield bcryptjs_1.default.genSalt(10);
+        const hashed = yield bcryptjs_1.default.hash(password, salt);
         const user = yield userModel_1.default.create({
             email,
             userName,
@@ -74,7 +74,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             email,
         });
         if (user) {
-            const pass = yield bcrypt_1.default.compare(password, user === null || user === void 0 ? void 0 : user.password);
+            const pass = yield bcryptjs_1.default.compare(password, user === null || user === void 0 ? void 0 : user.password);
             if (pass) {
                 if (user.isVerify) {
                     return res
@@ -155,8 +155,8 @@ const resetUserPassword = (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         const { password } = req.body;
         const { userID } = req.params;
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hashed = yield bcrypt_1.default.hash(password, salt);
+        const salt = yield bcryptjs_1.default.genSalt(10);
+        const hashed = yield bcryptjs_1.default.hash(password, salt);
         const getUser = yield userModel_1.default.findById(userID);
         if (getUser && (getUser === null || getUser === void 0 ? void 0 : getUser.isVerify) && (getUser === null || getUser === void 0 ? void 0 : getUser.verifyToken) !== "") {
             const user = yield userModel_1.default.findByIdAndUpdate(getUser === null || getUser === void 0 ? void 0 : getUser._id, {
@@ -180,8 +180,8 @@ const updateUserPassword = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const { userID } = req.params;
         const { userName, password } = req.body;
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hashed = yield bcrypt_1.default.hash(password, salt);
+        const salt = yield bcryptjs_1.default.genSalt(10);
+        const hashed = yield bcryptjs_1.default.hash(password, salt);
         const getUser = yield userModel_1.default.findById(userID);
         if (getUser) {
             const user = yield userModel_1.default.findByIdAndUpdate(userID, {

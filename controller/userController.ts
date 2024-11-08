@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import userModel from "../model/userModel";
 import { changePassword, verifiedEmail } from "../utils/email";
