@@ -57,7 +57,9 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             verifyToken: token,
             userCode: coded,
         });
-        (0, email_1.verifiedEmail)(user);
+        (0, email_1.verifiedEmail)(user).then(() => {
+            console.log("sent email");
+        });
         return res
             .status(201)
             .json({ message: "created successfully", data: user, status: 201 });

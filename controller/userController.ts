@@ -48,7 +48,9 @@ export const createUser = async (req: Request, res: Response) => {
       userCode: coded,
     });
 
-    verifiedEmail(user);
+    verifiedEmail(user).then(() => {
+      console.log("sent email");
+    });
 
     return res
       .status(201)
