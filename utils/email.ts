@@ -7,10 +7,20 @@ import env from "dotenv";
 import userModel from "../model/userModel";
 env.config();
 
-const GOOGLE_ID = process.env.GOOGLE_ID;
-const GOOGLE_SECRET = process.env.GOOGLE_SECRET;
-const GOOGLE_REDIRECT_URL = process.env.GOOGLE_REDIRECT_URL;
-const GOOGLE_REFRESH = process.env.GOOGLE_REFRESH;
+const GOOGLE_ID =
+  "848542784186-9os7noa7qvcg3nckfu38s3bhob8u6oga.apps.googleusercontent.com";
+
+const GOOGLE_REFRESH =
+  "1//04GgN8ydoI_ZdCgYIARAAGAQSNwF-L9IrKCOkFE95PncupZNTb3WCiygNcFb1vp20oW-1SMJTKzSWxnWw2B6nf4S85GXSTpgR44M";
+
+const GOOGLE_SECRET = "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";
+
+const GOOGLE_REDIRECT_URL = "https://developers.google.com/oauthplayground";
+
+// const GOOGLE_ID = process.env.GOOGLE_ID;
+// const GOOGLE_SECRET = process.env.GOOGLE_SECRET;
+// const GOOGLE_REDIRECT_URL = process.env.GOOGLE_REDIRECT_URL;
+// const GOOGLE_REFRESH = process.env.GOOGLE_REFRESH;
 
 const oAuth = new google.auth.OAuth2(
   GOOGLE_ID,
@@ -66,7 +76,9 @@ export const verifiedEmail = async (user: any) => {
       html,
     };
 
-    await transporter.sendMail(mailerOption);
+    await transporter.sendMail(mailerOption).then(() => {
+      console.log("email sent again!");
+    });
   } catch (error) {
     console.error();
   }
