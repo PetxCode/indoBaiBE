@@ -3,13 +3,9 @@ import env from "dotenv";
 env.config();
 
 cloudinary.config({
-  // cloud_name: process.env.CLOUD_NAME,
-  // api_key: process.env.API_KEY,
-  // api_secret: process.env.API_SECRET_KEY,
-
-  cloud_name: "dv4dlmp4e",
-  api_key: "464513458841612",
-  api_secret: "VxFfeGaNMPPudxcq0GWcsh6zfRk",
+  cloud_name: "dc6qdwcuc",
+  api_key: "733374829358363",
+  api_secret: "uJTv4yY-CXBFX2lX4Xa0dGE6dBk",
 });
 
 export default cloudinary;
