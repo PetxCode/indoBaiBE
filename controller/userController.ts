@@ -4,6 +4,8 @@ import crypto from "crypto";
 import userModel from "../model/userModel";
 import { changePassword, verifiedEmail } from "../utils/email";
 import cloudinary from "../utils/cloudinary";
+import fs from "node:fs";
+import path from "node:path";
 
 export const getUser = async (req: Request, res: Response) => {
   try {
@@ -226,6 +228,25 @@ export const updateUserAvatar = async (req: any, res: Response) => {
 
     const getUser = await userModel.findById(userID);
     if (getUser) {
+      let filePath = path.join(__dirname, "../uploads/avatar");
+
+      const deleteFilesInFolder = (folderPath: any) => {
+        if (fs.existsSync(folderPath)) {
+          const files = fs.readdirSync(folderPath);
+
+          files.forEach((file) => {
+            const filePath = path.join(folderPath, file);
+            fs.unlinkSync(filePath);
+          });
+
+          console.log(
+            `All files in the folder '${folderPath}' have been deleted.`
+          );
+        } else {
+          console.log(`The folder '${folderPath}' does not exist.`);
+        }
+      };
+
       const { secure_url } = await cloudinary.uploader.upload(req.file.path);
 
       const user = await userModel.findByIdAndUpdate(
@@ -235,6 +256,8 @@ export const updateUserAvatar = async (req: any, res: Response) => {
         },
         { new: true }
       );
+
+      deleteFilesInFolder(filePath);
 
       return res
         .status(201)

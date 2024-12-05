@@ -17,6 +17,16 @@ const GOOGLE_SECRET = "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";
 
 const GOOGLE_REDIRECT_URL = "https://developers.google.com/oauthplayground";
 
+// const GOOGLE_ID =
+//   "505254584403-4no5d7rnsiviuqlgacnjam4o9aj4augo.apps.googleusercontent.com";
+
+// const GOOGLE_REFRESH =
+//   "1//047y0yS_MC4b2CgYIARAAGAQSNwF-L9Ir2XoVt4mILAG1js-I9n08muVasqy2bA3mbmV9Goa0CuXK14H-hyhGHhqRCEDMOZ_rrOI";
+
+// const GOOGLE_SECRET = "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";
+
+// const GOOGLE_REDIRECT_URL = "https://developers.google.com/oauthplayground";
+
 // const GOOGLE_ID = process.env.GOOGLE_ID;
 // const GOOGLE_SECRET = process.env.GOOGLE_SECRET;
 // const GOOGLE_REDIRECT_URL = process.env.GOOGLE_REDIRECT_URL;

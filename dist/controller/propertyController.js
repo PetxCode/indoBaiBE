@@ -17,6 +17,8 @@ const propertyModel_1 = __importDefault(require("../model/propertyModel"));
 const userModel_1 = __importDefault(require("../model/userModel"));
 const mongoose_1 = require("mongoose");
 const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
+const node_fs_1 = __importDefault(require("node:fs"));
+const node_path_1 = __importDefault(require("node:path"));
 const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { propertyName, propertyCaptureTitle, mainDescription, firstDescription, gallaryDescription, closingDescription, closingTitle, bathroom, bedroom, startingPrice, city, country, location, category, measure, region, community, } = req.body;
@@ -32,15 +34,31 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
             let gallary = [];
             let gallaryImages = req.files.gallaryImage;
             const { secure_url } = yield cloudinary_1.default.uploader.upload(cover.path);
-            console.log(secure_url);
             const { secure_url: map } = yield cloudinary_1.default.uploader.upload(mapFile.path);
-            console.log(map);
             const { secure_url: brochure } = yield cloudinary_1.default.uploader.upload(brochureFile.path);
-            console.log(brochure);
             for (let i of gallaryImages) {
                 const { secure_url } = yield cloudinary_1.default.uploader.upload(i.path);
                 gallary.push(secure_url);
             }
+            let fileDoc = node_path_1.default.join(__dirname, "../uploads/document");
+            let fileCov = node_path_1.default.join(__dirname, "../uploads/coverImages");
+            let fileMap = node_path_1.default.join(__dirname, "../uploads/maps");
+            let fileOthers = node_path_1.default.join(__dirname, "../uploads/others");
+            let filePho = node_path_1.default.join(__dirname, "../uploads/photos");
+            const deleteFilesInFolder = (folderPath) => {
+                if (node_fs_1.default.existsSync(folderPath)) {
+                    const files = node_fs_1.default.readdirSync(folderPath);
+                    files.forEach((file) => {
+                        const filePath = node_path_1.default.join(folderPath, file);
+                        node_fs_1.default.unlinkSync(filePath);
+                    });
+                    return;
+                }
+                else {
+                    return;
+                }
+            };
+            deleteFilesInFolder;
             const property = yield propertyModel_1.default.create({
                 region,
                 community,
@@ -67,6 +85,11 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
             });
             getUser.properties.push(new mongoose_1.Types.ObjectId(property === null || property === void 0 ? void 0 : property._id));
             getUser.save();
+            deleteFilesInFolder(fileDoc);
+            deleteFilesInFolder(fileMap);
+            deleteFilesInFolder(fileOthers);
+            deleteFilesInFolder(fileCov);
+            deleteFilesInFolder(filePho);
             return res.status(201).json({
                 message: "created successfully",
                 data: property,

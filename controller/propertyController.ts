@@ -4,6 +4,8 @@ import userModel from "../model/userModel";
 import { streamUpload } from "../utils/streamifier";
 import { Types } from "mongoose";
 import cloudinary from "../utils/cloudinary";
+import fs from "node:fs";
+import path from "node:path";
 
 export const createProperty = async (req: any, res: Response) => {
   try {
@@ -48,24 +50,42 @@ export const createProperty = async (req: any, res: Response) => {
 
       const { secure_url } = await cloudinary.uploader.upload(cover.path);
 
-      console.log(secure_url);
-
       const { secure_url: map } = await cloudinary.uploader.upload(
         mapFile.path
       );
 
-      console.log(map);
-
       const { secure_url: brochure } = await cloudinary.uploader.upload(
         brochureFile.path
       );
-      console.log(brochure);
 
       for (let i of gallaryImages) {
         const { secure_url }: any = await cloudinary.uploader.upload(i.path!);
 
         gallary.push(secure_url);
       }
+
+      let fileDoc = path.join(__dirname, "../uploads/document");
+      let fileCov = path.join(__dirname, "../uploads/coverImages");
+      let fileMap = path.join(__dirname, "../uploads/maps");
+      let fileOthers = path.join(__dirname, "../uploads/others");
+      let filePho = path.join(__dirname, "../uploads/photos");
+
+      const deleteFilesInFolder = (folderPath: any) => {
+        if (fs.existsSync(folderPath)) {
+          const files = fs.readdirSync(folderPath);
+
+          files.forEach((file) => {
+            const filePath = path.join(folderPath, file);
+            fs.unlinkSync(filePath);
+          });
+
+          return;
+        } else {
+          return;
+        }
+      };
+
+      deleteFilesInFolder;
 
       const property: any = await propertyModel.create({
         region,
@@ -95,6 +115,12 @@ export const createProperty = async (req: any, res: Response) => {
 
       getUser.properties.push(new Types.ObjectId(property?._id));
       getUser.save();
+
+      deleteFilesInFolder(fileDoc);
+      deleteFilesInFolder(fileMap);
+      deleteFilesInFolder(fileOthers);
+      deleteFilesInFolder(fileCov);
+      deleteFilesInFolder(filePho);
 
       return res.status(201).json({
         message: "created successfully",

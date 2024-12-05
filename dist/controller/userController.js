@@ -18,6 +18,8 @@ const crypto_1 = __importDefault(require("crypto"));
 const userModel_1 = __importDefault(require("../model/userModel"));
 const email_1 = require("../utils/email");
 const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
+const node_fs_1 = __importDefault(require("node:fs"));
+const node_path_1 = __importDefault(require("node:path"));
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userID } = req.params;
@@ -212,10 +214,25 @@ const updateUserAvatar = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const { userID } = req.params;
         const getUser = yield userModel_1.default.findById(userID);
         if (getUser) {
+            let filePath = node_path_1.default.join(__dirname, "../uploads/avatar");
+            const deleteFilesInFolder = (folderPath) => {
+                if (node_fs_1.default.existsSync(folderPath)) {
+                    const files = node_fs_1.default.readdirSync(folderPath);
+                    files.forEach((file) => {
+                        const filePath = node_path_1.default.join(folderPath, file);
+                        node_fs_1.default.unlinkSync(filePath);
+                    });
+                    console.log(`All files in the folder '${folderPath}' have been deleted.`);
+                }
+                else {
+                    console.log(`The folder '${folderPath}' does not exist.`);
+                }
+            };
             const { secure_url } = yield cloudinary_1.default.uploader.upload(req.file.path);
             const user = yield userModel_1.default.findByIdAndUpdate(userID, {
                 avatar: secure_url,
             }, { new: true });
+            deleteFilesInFolder(filePath);
             return res
                 .status(201)
                 .json({ message: "User update successfully", data: user, status: 201 });
