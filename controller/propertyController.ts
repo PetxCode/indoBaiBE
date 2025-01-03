@@ -64,7 +64,7 @@ export const createProperty = async (req: any, res: Response) => {
         gallary.push(secure_url);
       }
 
-      let fileDoc = path.join(__dirname, "../uploads/document");
+      let fileDoc = path.join(__dirname, "../uploads/documents");
       let fileCov = path.join(__dirname, "../uploads/coverImages");
       let fileMap = path.join(__dirname, "../uploads/maps");
       let fileOthers = path.join(__dirname, "../uploads/others");

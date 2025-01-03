@@ -1,5 +1,30 @@
 import multer from "multer";
+import path from "node:path";
+import fs from "node:fs";
 
+let filePath = path.join(__dirname, "./uploads");
+let filePathCoverImage = path.join(__dirname, "./uploads/coverImages");
+let filePathMap = path.join(__dirname, "./uploads/maps");
+let filePathDocuments = path.join(__dirname, "./uploads/documents");
+let filePathPhotos = path.join(__dirname, "./uploads/photos");
+let filePathOthers = path.join(__dirname, "./uploads/others");
+
+const createFolder = (filePathFolder: any) => {
+  if (!fs.existsSync(filePathFolder)) {
+    fs.mkdir(filePathFolder, () => {
+      console.log("folder created");
+    });
+  } else {
+    console.log("folder exist...");
+  }
+};
+
+createFolder(filePath);
+createFolder(filePathCoverImage);
+createFolder(filePathMap);
+createFolder(filePathDocuments);
+createFolder(filePathPhotos);
+createFolder(filePathOthers);
 export const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {

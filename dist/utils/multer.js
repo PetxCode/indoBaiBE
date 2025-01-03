@@ -5,6 +5,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadAvatar = exports.avatar = exports.upload = void 0;
 const multer_1 = __importDefault(require("multer"));
+const node_path_1 = __importDefault(require("node:path"));
+const node_fs_1 = __importDefault(require("node:fs"));
+let filePath = node_path_1.default.join(__dirname, "./uploads");
+let filePathCoverImage = node_path_1.default.join(__dirname, "./uploads/coverImages");
+let filePathMap = node_path_1.default.join(__dirname, "./uploads/maps");
+let filePathDocuments = node_path_1.default.join(__dirname, "./uploads/documents");
+let filePathPhotos = node_path_1.default.join(__dirname, "./uploads/photos");
+let filePathOthers = node_path_1.default.join(__dirname, "./uploads/others");
+const createFolder = (filePathFolder) => {
+    if (!node_fs_1.default.existsSync(filePathFolder)) {
+        node_fs_1.default.mkdir(filePathFolder, () => {
+            console.log("folder created");
+        });
+    }
+    else {
+        console.log("folder exist...");
+    }
+};
+createFolder(filePath);
+createFolder(filePathCoverImage);
+createFolder(filePathMap);
+createFolder(filePathDocuments);
+createFolder(filePathPhotos);
+createFolder(filePathOthers);
 exports.upload = (0, multer_1.default)({
     storage: multer_1.default.diskStorage({
         destination: (req, file, cb) => {

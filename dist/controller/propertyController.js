@@ -40,7 +40,7 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 const { secure_url } = yield cloudinary_1.default.uploader.upload(i.path);
                 gallary.push(secure_url);
             }
-            let fileDoc = node_path_1.default.join(__dirname, "../uploads/document");
+            let fileDoc = node_path_1.default.join(__dirname, "../uploads/documents");
             let fileCov = node_path_1.default.join(__dirname, "../uploads/coverImages");
             let fileMap = node_path_1.default.join(__dirname, "../uploads/maps");
             let fileOthers = node_path_1.default.join(__dirname, "../uploads/others");
