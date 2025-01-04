@@ -21,6 +21,9 @@ const createFolder = (filePathFolder: any) => {
     console.log("folder exist...");
   }
 };
+createFolder(filePathMedia);
+
+createFolder(filePathOthers);
 
 createFolder(filePath);
 createFolder(filePathCoverImage);
@@ -29,10 +32,6 @@ createFolder(filePathDocuments);
 createFolder(filePathPhotos);
 
 console.log("Read Here");
-
-createFolder(filePathOthers);
-
-createFolder(filePathMedia);
 
 export const upload = multer({
   storage: multer.diskStorage({
@@ -45,10 +44,10 @@ export const upload = multer({
       // else if (file.fieldname === "map") folder = "./uploads/maps";
       // else if (file.fieldname === "brochure") folder = "./uploads/documents";
       // else if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
-      if (file.fieldname === "coverImage") folder = "./uploads/media";
-      else if (file.fieldname === "map") folder = "./uploads/media";
-      else if (file.fieldname === "brochure") folder = "./uploads/media";
-      else if (file.fieldname === "gallaryImage") folder = "./uploads/media";
+      if (file.fieldname === "coverImage") folder = filePathMedia;
+      else if (file.fieldname === "map") folder = filePathMedia;
+      else if (file.fieldname === "brochure") folder = filePathMedia;
+      else if (file.fieldname === "gallaryImage") folder = filePathMedia;
 
       cb(null, folder);
     },

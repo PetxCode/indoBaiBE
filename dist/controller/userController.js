@@ -214,7 +214,7 @@ const updateUserAvatar = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const { userID } = req.params;
         const getUser = yield userModel_1.default.findById(userID);
         if (getUser) {
-            let filePath = node_path_1.default.join(__dirname, "../uploads/media");
+            let filePath = node_path_1.default.join(__dirname, "../utils/uploads/media");
             const deleteFilesInFolder = (folderPath) => {
                 if (node_fs_1.default.existsSync(folderPath)) {
                     const files = node_fs_1.default.readdirSync(folderPath);

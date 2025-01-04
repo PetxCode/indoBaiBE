@@ -228,7 +228,7 @@ export const updateUserAvatar = async (req: any, res: Response) => {
 
     const getUser = await userModel.findById(userID);
     if (getUser) {
-      let filePath = path.join(__dirname, "../uploads/media");
+      let filePath = path.join(__dirname, "../utils/uploads/media");
 
       const deleteFilesInFolder = (folderPath: any) => {
         if (fs.existsSync(folderPath)) {

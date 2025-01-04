@@ -45,6 +45,7 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
             let fileMap = node_path_1.default.join(__dirname, "../uploads/maps");
             let fileOthers = node_path_1.default.join(__dirname, "../uploads/others");
             let filePho = node_path_1.default.join(__dirname, "../uploads/photos");
+            let fileMedia = node_path_1.default.join(__dirname, "../utils/uploads/media");
             const deleteFilesInFolder = (folderPath) => {
                 if (node_fs_1.default.existsSync(folderPath)) {
                     const files = node_fs_1.default.readdirSync(folderPath);
@@ -90,6 +91,7 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
             deleteFilesInFolder(fileOthers);
             deleteFilesInFolder(fileCov);
             deleteFilesInFolder(filePho);
+            deleteFilesInFolder(fileMedia);
             return res.status(201).json({
                 message: "created successfully",
                 data: property,

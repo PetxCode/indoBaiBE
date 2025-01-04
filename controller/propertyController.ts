@@ -70,6 +70,8 @@ export const createProperty = async (req: any, res: Response) => {
       let fileOthers = path.join(__dirname, "../uploads/others");
       let filePho = path.join(__dirname, "../uploads/photos");
 
+      let fileMedia = path.join(__dirname, "../utils/uploads/media");
+
       const deleteFilesInFolder = (folderPath: any) => {
         if (fs.existsSync(folderPath)) {
           const files = fs.readdirSync(folderPath);
@@ -121,6 +123,8 @@ export const createProperty = async (req: any, res: Response) => {
       deleteFilesInFolder(fileOthers);
       deleteFilesInFolder(fileCov);
       deleteFilesInFolder(filePho);
+
+      deleteFilesInFolder(fileMedia);
 
       return res.status(201).json({
         message: "created successfully",
