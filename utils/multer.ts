@@ -2,6 +2,8 @@ import multer from "multer";
 import path from "node:path";
 import fs from "node:fs";
 
+let filePathMedia = path.join(__dirname, "./uploads/media");
+
 let filePath = path.join(__dirname, "./uploads");
 let filePathCoverImage = path.join(__dirname, "./uploads/coverImages");
 let filePathMap = path.join(__dirname, "./uploads/maps");
@@ -10,9 +12,10 @@ let filePathPhotos = path.join(__dirname, "./uploads/photos");
 let filePathOthers = path.join(__dirname, "./uploads/others");
 
 const createFolder = (filePathFolder: any) => {
+  console.log("Read Here");
   if (!fs.existsSync(filePathFolder)) {
     fs.mkdir(filePathFolder, () => {
-      console.log("folder created");
+      console.log("folder just created");
     });
   } else {
     console.log("folder exist...");
@@ -24,18 +27,29 @@ createFolder(filePathCoverImage);
 createFolder(filePathMap);
 createFolder(filePathDocuments);
 createFolder(filePathPhotos);
+
+console.log("Read Here");
+
 createFolder(filePathOthers);
+
+createFolder(filePathMedia);
+
 export const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      let folder = "./uploads/others";
+      let folder = "./uploads/media";
 
       // if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
 
-      if (file.fieldname === "coverImage") folder = "./uploads/coverImages";
-      else if (file.fieldname === "map") folder = "./uploads/maps";
-      else if (file.fieldname === "brochure") folder = "./uploads/documents";
-      else if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
+      // if (file.fieldname === "coverImage") folder = "./uploads/coverImages";
+      // else if (file.fieldname === "map") folder = "./uploads/maps";
+      // else if (file.fieldname === "brochure") folder = "./uploads/documents";
+      // else if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
+      if (file.fieldname === "coverImage") folder = "./uploads/media";
+      else if (file.fieldname === "map") folder = "./uploads/media";
+      else if (file.fieldname === "brochure") folder = "./uploads/media";
+      else if (file.fieldname === "gallaryImage") folder = "./uploads/media";
+
       cb(null, folder);
     },
     filename: (req, file, cb) => {
@@ -61,7 +75,7 @@ export const avatar = multer({
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/avatar");
+    cb(null, filePathMedia);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
