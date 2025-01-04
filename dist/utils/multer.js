@@ -37,11 +37,6 @@ exports.upload = (0, multer_1.default)({
     storage: multer_1.default.diskStorage({
         destination: (req, file, cb) => {
             let folder = "./uploads/media";
-            // if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
-            // if (file.fieldname === "coverImage") folder = "./uploads/coverImages";
-            // else if (file.fieldname === "map") folder = "./uploads/maps";
-            // else if (file.fieldname === "brochure") folder = "./uploads/documents";
-            // else if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
             if (file.fieldname === "coverImage")
                 folder = filePathMedia;
             else if (file.fieldname === "map")
@@ -80,3 +75,8 @@ const storage = multer_1.default.diskStorage({
     },
 });
 exports.uploadAvatar = (0, multer_1.default)({ storage: storage }).single("avatar");
+// if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
+// if (file.fieldname === "coverImage") folder = "./uploads/coverImages";
+// else if (file.fieldname === "map") folder = "./uploads/maps";
+// else if (file.fieldname === "brochure") folder = "./uploads/documents";
+// else if (file.fieldname === "gallaryImage") folder = "./uploads/photos";
