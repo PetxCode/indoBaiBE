@@ -109,7 +109,9 @@ const createProperty = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.createProperty = createProperty;
 const getAllProperties = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const property = yield propertyModel_1.default.find();
+        const property = yield propertyModel_1.default.find().sort({
+            createdAt: -1,
+        });
         return res
             .status(201)
             .json({ message: "found successfully", data: property, status: 200 });
@@ -122,7 +124,9 @@ exports.getAllProperties = getAllProperties;
 const getAllPropertiesByCommuninty = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { community } = req.body;
-        const property = yield propertyModel_1.default.find({ community });
+        const property = yield propertyModel_1.default.find({ community }).sort({
+            createdAt: -1,
+        });
         return res
             .status(201)
             .json({ message: "found successfully", data: property, status: 200 });

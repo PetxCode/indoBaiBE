@@ -141,7 +141,9 @@ export const createProperty = async (req: any, res: Response) => {
 
 export const getAllProperties = async (req: Request, res: Response) => {
   try {
-    const property = await propertyModel.find();
+    const property = await propertyModel.find().sort({
+      createdAt: -1,
+    });
 
     return res
       .status(201)
@@ -157,7 +159,9 @@ export const getAllPropertiesByCommuninty = async (
 ) => {
   try {
     const { community } = req.body;
-    const property = await propertyModel.find({ community });
+    const property = await propertyModel.find({ community }).sort({
+      createdAt: -1,
+    });
 
     return res
       .status(201)
